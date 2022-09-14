@@ -1,5 +1,5 @@
 .main {
-  margin: 60px auto;
+  margin: 60px auto 20px auto;
   border: 2px solid #455d7a;
   border-radius: 8px;
   padding: 25px;
@@ -27,6 +27,10 @@ p {
 
 a {
   text-decoration: none;
+}
+
+img {
+  height: 60px;
 }
 
 footer {
@@ -67,6 +71,7 @@ footer {
 .condition {
   font-size: 25px;
   text-align: center;
+  text-transform: capitalize;
 }
 
 .temperature {
@@ -81,7 +86,7 @@ footer {
 
 .current-temp {
   margin: 0 auto;
-  padding: 25px 0;
+  padding: 20px 0 5px 0;
   text-align: center;
 }
 
@@ -94,7 +99,7 @@ footer {
   border: 2px solid #455d7a;
   border-radius: 8px;
   margin: 15px auto 0 auto;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   font-size: 20px;
 }

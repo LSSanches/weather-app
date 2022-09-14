@@ -65,44 +65,93 @@ function formatTime(_time) {
 
 formatTime(now);
 
-// to update the city
-//id = "search"
-//id = "btn"
-function update(event) {
-  event.preventDefault();
-  let searchField = document.querySelector("#search");
-  updateTemperature(searchField.value);
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
 }
 
-let searchBtn = document.querySelector("#btn");
-searchBtn.addEventListener("click", update);
+function displayForecast(response) {
+  let forecast = response.data.daily;
 
-// to update current temperature considering tipped city
-function updateTemperature(city) {
-  let apiKey = "0e032dd702d93fe6312bb3410aedb25c";
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row daily">`;
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-2">
+          <p>
+            ${formatDay(forecastDay.dt)}
+            <br />
+            <img src="http://openweathermap.org/img/wn/${
+              forecastDay.weather[0].icon
+            }@2x.png"/>
+            <br />
+            ${Math.round(forecastDay.temp.max)}°C
+            <br />
+            ${Math.round(forecastDay.temp.min)}°C
+          </p>
+        </div>
+`;
+    }
+  });
+
+  forecastHTML = forecastHTML + `</div`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function displayTemperature(response) {
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(response.data.main.temp);
+
+  let cityElement = document.querySelector("#city");
+  cityElement.innerHTML = response.data.name;
+
+  let descriptionElement = document.querySelector("#description");
+  descriptionElement.innerHTML = response.data.weather[0].description;
+
+  let humidityElement = document.querySelector("#humidity");
+  humidityElement.innerHTML = response.data.main.humidity;
+
+  let windElement = document.querySelector("#wind");
+  windElement.innerHTML = Math.round(response.data.wind.speed);
+
+  let iconElement = document.querySelector("#icon");
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  iconElement.setAttribute("alt", response.data.weather[0].description);
+
+  getForecast(response.data.coord);
+}
+
+function search(city) {
+  let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-  function displayWeather(response) {
-    document.querySelector("#temperature").innerHTML = Math.round(
-      response.data.main.temp
-    );
-    document.querySelector("#city").innerHTML = city;
-    document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-    document.querySelector("#wind").innerHTML = Math.round(
-      response.data.wind.speed
-    );
-    document.querySelector("#description").innerHTML =
-      response.data.weather[0].main;
-  }
-
-  function onError(error) {
-    alert("Please type a valid city name");
-  }
-
-  axios.get(apiUrl).then(displayWeather).catch(onError);
+  axios.get(apiUrl).then(displayTemperature);
 }
 
-updateTemperature(document.querySelector("#city").innerHTML);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+search("Toronto");
 
 // to update based on geolocation
 function showLocation(response) {

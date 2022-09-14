@@ -11,8 +11,6 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="css/style.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,6 +19,8 @@
     />
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css" />
 
     <title>Weather App</title>
   </head>
@@ -40,41 +40,45 @@
           <h2 id="time">14:45</h2>
         </div>
 
-        <form class="search">
-          <div class="row">
-           <div class="col-sm-6">
-              <input
-                type="search"
-                placeholder="Type city here"
-                class="form-control shadow"
-                autofocus="on"
-                id="search"
-              />
+        <div class="weather-app">
+          <form id="search-form">
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  type="search"
+                  placeholder="Type city here"
+                  class="form-control shadow"
+                  id="city-input"
+                  autofocus="on"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  type="submit"
+                  value="Search"
+                  class="btn btn-primary shadow"
+                  id="btn"
+                />
+              </div>
+              <div class="col-sm-1">
+                <input
+                  type="submit"
+                  value="🌐"
+                  class="btn btn-primary shadow geolocation"
+                  id="location"
+                />
+              </div>
+              <div class="col-4"></div>
             </div>
-            <div class="col-sm-2">
-              <input
-                type="submit"
-                value="Search"
-                class="btn btn-primary shadow"
-                id="btn"
-              />
-            </div>          
-          <div class="col-sm-2">
-             <input
-              type="submit"
-              value="🌐"
-              class="btn btn-primary shadow geolocation"
-              id="location"
-            ></input>
-            </div>
-          <div class="col-2"></div>
-        </form>
+          </form>
+        </div>
       </div>
 
       <div class="row current-temp">
         <div class="col-lg-4 center-div">
           <p class="min-max">
-            🌞
+            <img src="" alt="" id="icon" />
             <br />
             max 28°C
             <br />
@@ -83,12 +87,12 @@
         </div>
         <div class="col-lg-4 center-div">
           <h1>
-            <span id="city">Toronto</span>
+            <span id="city"> </span>
             <br />
-            <span class="temperature" id="temperature">17</span>
+            <span class="temperature" id="temperature"> </span>
 
             <span class="units">
-              <a href="#" id="celsius-link">°C</a>
+              °C
               <!--|
                <a href="#" id="fahrenheit-link">°F</a> -->
             </span>
@@ -97,85 +101,27 @@
         <div class="col-lg-4 center-div">
           <p class="condition">
             <br />
-           Humidity: <span id="humidity">80</span>
+            Humidity: <span id="humidity"> </span>%
             <br />
-            Wind: <span id="wind">14</span> km/h
-           <br />
-            <span id="description">Sunny</span>
+            Wind: <span id="wind"> </span> km/h
+            <br />
+            <span id="description"> </span>
           </p>
         </div>
       </div>
-      
-      <h4 class="forecast">Weather Forecast</h4>
 
-      <div class="row daily">
-        <div class="col-1"></div>
-
-        <div class="col-2">
-          <p>
-            Friday
-            <br />
-            🌦️
-            <br />
-            max 23°C
-            <br />
-            min 19°C
-          </p>
-        </div>
-
-        <div class="col-2">
-          <p>
-            Saturday
-            <br />
-            🌥️
-            <br />
-            max 28°C
-            <br />
-            min 21°C
-          </p>
-        </div>
-
-        <div class="col-2">
-          <p>
-            Sunday
-            <br />
-            🌦️
-            <br />
-            max 28°C
-            <br />
-            min 21°C
-          </p>
-        </div>
-
-        <div class="col-2">
-          <p>
-            Monday
-            <br />
-            🌧️
-            <br />
-            max 25°C
-            <br />
-            min 17°C
-          </p>
-        </div>
-
-        <div class="col-2">
-          <p>
-            Tuesday
-            <br />
-            🌧️
-            <br />
-            max 23°C
-            <br />
-            min 16°C
-          </p>
-        </div>
-
-        <div class="col-1"></div>
+      <h4 class="forecast"> Weather Forecast </h4>
+      <span id="forecast"> </span>
+ 
       </div>
     </div>
-    <footer> 
-      <div> <a href="https://github.com/LSSanches/weather-app">Open source code</a> by Laura Sanches. </div>
+    <footer>
+      <div>
+        <a href="https://github.com/LSSanches/weather-app" target="_blank"
+          >Open source code</a
+        >
+        by Laura Sanches.
+      </div>
     </footer>
 
     <script src="js/script.js"></script>
